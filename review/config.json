@@ -1,0 +1,22 @@
+{
+  "base_url": "https://llmmelon.cloud/v1",
+  "api_key": "sk-Z8PlU5UPZzhbT98xC9eLVc2J2UGdHj7Styk5jV8r8jCq1htm",
+  "model": "gpt-5.5",
+  "target_root": "benchmark",
+  "review_models": [
+      "kimi-k2.6",
+      "gemini-3.1-pro-preview",
+      "deepseek-v4-pro"
+  ],
+  "proof_filename": "informal_proof.md",
+  "review_filename": "review.json",
+  "review_md_filename": "review.md",
+  "temperature": 0,
+  "max_tokens": 2000,
+  "request_timeout": 300,
+  "stream": false,
+  "overwrite": false,
+  "retry_initial_delay": 5,
+  "retry_max_delay": 60,
+  "retry_backoff": 2
+}

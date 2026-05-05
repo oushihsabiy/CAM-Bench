@@ -1,0 +1,31 @@
+{
+  "models": [
+    {
+      "model": "kimi-k2.6",
+      "api_key": "sk-Z8PlU5UPZzhbT98xC9eLVc2J2UGdHj7Styk5jV8r8jCq1htm",
+      "base_url": "https://llmmelon.cloud/v1"
+    },
+    {
+      "model": "deepseek-v4-pro",
+      "api_key": "sk-Z8PlU5UPZzhbT98xC9eLVc2J2UGdHj7Styk5jV8r8jCq1htm",
+      "base_url": "https://llmmelon.cloud/v1"
+    },
+    {
+      "model": "gemini-3.1-pro-preview",
+      "api_key": "sk-RQuqhJlK39fLt4SFhaHhRFQ9AdTyxL7zHC2zwGA5xMgm3DMv",
+      "base_url": "https://llmmelon.cloud/v1"
+    }
+  ],
+  "input_dirs": [
+    "/root/workspace/benchmark/benchmark"
+  ],
+  "input_glob": "informal.json",
+  "pass_n": 1,
+  "workers": 1,
+  "temperature": 0.6,
+  "max_tokens_per_call": 12000,
+  "problem_timeout": 100000,
+  "stream": false,
+  "output_root": "/root/workspace/benchmark/informal_evaluation/results",
+  "remove_completed_from_task": true
+}
