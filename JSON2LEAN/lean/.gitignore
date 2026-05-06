@@ -1,0 +1,4 @@
+/.lake
+/.github
+/LeanProject/*
+!/LeanProject/Basic.lean

@@ -1,0 +1,28 @@
+# Whitelist mode: ignore everything by default.
+*
+
+# Keep this file tracked.
+!.gitignore
+
+# Keep required root files.
+!main.py
+!settings.json
+!README.md
+!命令.md
+!项目说明.md
+!LICENSE
+
+# Keep required source subtrees.
+!src/
+src/*
+!src/token_usage.py
+!src/book/
+!src/book/**
+!src/review/
+!src/review/**
+!src/prompts/
+!src/prompts/**
+
+# Drop Python cache artifacts inside allowed trees.
+src/**/__pycache__/
+src/**/*.py[cod]

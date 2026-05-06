@@ -1,0 +1,18 @@
+{
+  "api_key": "sk-cd118b7364c055a2b88a0bd7fd75243fccb46c8a5995b26ecf6d34efdb061755",
+  "base_url": "https://rayplus.site/v1",
+  "model": "gpt-5.4",
+  "llm_backend": "codex_cli",
+  "codex_cli": {
+    "bin": "bin/codex",
+    "workdir": "lean",
+    "model": "gpt-5.4",
+    "reasoning_effort": "high",
+    "disable_plugins": true,
+    "max_retries": 3,
+    "retry_backoff_base_seconds": 1.0,
+    "retry_backoff_max_seconds": 8.0,
+    "call_log_dir": "logs/codex_cli_calls",
+    "stages": ["recovery"]
+  }
+}

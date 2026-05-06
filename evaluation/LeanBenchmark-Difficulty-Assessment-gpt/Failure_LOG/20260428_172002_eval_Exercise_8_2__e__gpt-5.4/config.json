@@ -1,0 +1,6 @@
+{
+  "plan": "eval_eval",
+  "problem": "/root/workspace/benchmark/evaluation/lean/Leanproject/Leanproject/convex_optimization_Chapter8/Exercise_8_2__e_.lean",
+  "model": "gpt-5.4",
+  "total_blocks": 1
+}

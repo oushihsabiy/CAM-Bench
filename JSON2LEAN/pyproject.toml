@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "json2lean"
+version = "0.1.0"
+description = "Convert JSON optimization exercises into Lean 4 files"
+requires-python = ">=3.10"
+dependencies = [
+    "openai>=1.0",
+]
+
+[project.optional-dependencies]
+mcp = [
+    "lean-tools-mcp @ git+https://github.com/optsuite/lean-tools-mcp.git",
+]
+
+[project.scripts]
+json2lean = "json2lean.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]

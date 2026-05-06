@@ -1,0 +1,6 @@
+{
+  "plan": "eval_eval",
+  "problem": "/root/workspace/benchmark/evaluation/lean/Leanproject/Leanproject/revise-6/Exercise_12_18__a_.lean",
+  "model": "gpt-5.4",
+  "total_blocks": 2
+}

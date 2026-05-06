@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JSON Diff Viewer</title>
+
+  <!-- ── highlight.js (syntax highlight for raw view) ── -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css"
+    crossorigin="anonymous"
+  />
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"
+    crossorigin="anonymous"
+  ></script>
+
+  <!-- ── jsondiffpatch (diff engine) ── -->
+  <script
+    src="https://cdn.jsdelivr.net/npm/jsondiffpatch@0.6.0/dist/jsondiffpatch.umd.min.js"
+    crossorigin="anonymous"
+  ></script>
+
+  <!-- ── KaTeX (LaTeX formula rendering) ── -->
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css"
+    crossorigin="anonymous"
+  />
+  <script
+    defer
+    src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"
+    crossorigin="anonymous"
+  ></script>
+  <script
+    defer
+    src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+    crossorigin="anonymous"
+  ></script>
+
+  <!-- ── PDF export helpers ── -->
+  <script
+    src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"
+    crossorigin="anonymous"
+  ></script>
+  <script
+    src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"
+    crossorigin="anonymous"
+  ></script>
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<div id="app">
+
+  <!-- ════════════════════════════
+       SIDEBAR — file list
+  ════════════════════════════ -->
+  <aside id="sidebar">
+
+    <div id="sidebar-header">
+      Files <span id="sidebar-status"></span>
+    </div>
+
+    <div id="search-wrap">
+      <input
+        type="text"
+        id="search-input"
+        placeholder="Search files…"
+        autocomplete="off"
+        spellcheck="false"
+      />
+    </div>
+
+    <div id="file-list">
+      <!-- populated by app.js -->
+    </div>
+
+    <!-- Manual upload fallback -->
+    <div id="upload-section">
+      <div class="upload-title">Manual Upload</div>
+
+      <div class="upload-row">
+        <span class="upload-side-label">Left</span>
+        <button
+          class="upload-pick-btn"
+          id="upload-left-name"
+          onclick="document.getElementById('upload-left-input').click()"
+          title="Choose original JSON file"
+        >Choose file…</button>
+        <input
+          type="file"
+          id="upload-left-input"
+          accept=".json,application/json"
+          style="display:none"
+        />
+      </div>
+
+      <div class="upload-row">
+        <span class="upload-side-label">Right</span>
+        <button
+          class="upload-pick-btn"
+          id="upload-right-name"
+          onclick="document.getElementById('upload-right-input').click()"
+          title="Choose preprocessed JSON file"
+        >Choose file…</button>
+        <input
+          type="file"
+          id="upload-right-input"
+          accept=".json,application/json"
+          style="display:none"
+        />
+      </div>
+    </div>
+
+  </aside>
+
+  <!-- Draggable resize handle -->
+  <div id="sidebar-resize"></div>
+
+  <!-- ════════════════════════════
+       MAIN content area
+  ════════════════════════════ -->
+  <main id="main">
+
+    <!-- ── Toolbar ── -->
+    <div id="toolbar">
+
+      <!-- View-mode switcher -->
+      <div class="toolbar-group" role="group" aria-label="View mode">
+        <button class="tbtn" id="btn-unit" title="Per-question card view with LaTeX rendering">
+          Unit
+        </button>
+        <button class="tbtn active" id="btn-tree" title="Collapsible tree with diff highlights">
+          Tree
+        </button>
+        <button class="tbtn" id="btn-raw" title="Syntax-highlighted raw JSON text">
+          Raw
+        </button>
+      </div>
+
+      <div class="toolbar-sep"></div>
+
+      <!-- Diff-only filter -->
+      <label class="tb-toggle" title="Show only changed fields">
+        <input type="checkbox" id="toggle-diff-only" />
+        Diff only
+      </label>
+
+      <div class="toolbar-sep"></div>
+
+      <!-- Expand / collapse -->
+      <button class="tbtn" id="btn-expand-all"   title="Expand all nodes">⊞ Expand</button>
+      <button class="tbtn" id="btn-collapse-all" title="Collapse all nodes">⊟ Collapse</button>
+
+      <div class="toolbar-spacer"></div>
+
+      <!-- Export -->
+      <button class="btn" id="btn-export-left-pdf" title="Export left panel as PDF">
+        ↓ Left PDF
+      </button>
+      <button class="btn" id="btn-export-right-pdf" title="Export right panel as PDF">
+        ↓ Right PDF
+      </button>
+      <button class="btn btn-primary" id="btn-export-diff" title="Download diff as JSON">
+        ↓ Export Diff
+      </button>
+
+    </div>
+
+    <!-- ── Side-by-side panels ── -->
+    <div id="panels">
+
+      <!-- Left panel — original -->
+      <div class="panel" id="left-panel">
+        <div class="panel-header" id="left-panel-header">Original · data/</div>
+        <div class="panel-body"   id="left-viewer"></div>
+      </div>
+
+      <!-- Right panel — preprocessed -->
+      <div class="panel" id="right-panel">
+        <div class="panel-header" id="right-panel-header">Preprocessed · preprocessed_data/</div>
+        <div class="panel-body"   id="right-viewer"></div>
+      </div>
+
+    </div>
+
+    <!-- ── Info bar (clicked-field details) ── -->
+    <div id="info-bar" aria-live="polite">
+      <div class="ib-placeholder">Click on a field in the tree to see its path and values</div>
+    </div>
+
+    <!-- ── Status bar (diff summary) ── -->
+    <div id="status-bar" aria-live="polite"></div>
+
+  </main>
+
+</div><!-- #app -->
+
+<!-- Toast notification -->
+<div id="toast" aria-live="assertive" role="status"></div>
+
+<script src="app.js"></script>
+</body>
+</html>

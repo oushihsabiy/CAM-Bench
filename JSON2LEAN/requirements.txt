@@ -1,0 +1,2 @@
+openai>=1.0
+lean-tools-mcp @ git+https://github.com/optsuite/lean-tools-mcp.git ; python_version >= "3.11"

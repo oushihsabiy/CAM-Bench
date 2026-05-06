@@ -1,0 +1,19 @@
+{
+  "api_key": "sk-Z8PlU5UPZzhbT98xC9eLVc2J2UGdHj7Styk5jV8r8jCq1htm",
+  "base_url": "https://llmmelon.cloud/v1",
+  "models": [
+    "deepseek-v4-pro",
+    "claude-sonnet-4-6"
+  ],
+  "lean_cwd": "/root/workspace/benchmark/evaluation/lean/Leanproject",
+  "pass_n": 1,
+  "max_turns": 32,
+  "temperature": 0.4,
+  "max_tokens_per_call": 16000,
+  "max_tokens": 1000000,
+  "workers": 4,
+  "problem_timeout": 1000000000,
+  "stream": false,
+  "llm_error_budget_per_sorry": 0,
+  "lean_subdir": "Leanproject/selected"
+}

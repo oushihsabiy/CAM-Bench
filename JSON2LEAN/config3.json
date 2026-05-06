@@ -1,0 +1,18 @@
+{
+  "api_key": "clp_17ea90607634b140f401846c0127a51256121676915c6216b8b46d72869b8149",
+  "base_url": "https://api-vip.codex-for.me/v1",
+  "model": "gpt-5.4",
+  "llm_backend": "codex_cli",
+  "codex_cli": {
+    "bin": "bin/codex",
+    "workdir": "lean",
+    "model": "gpt-5.4",
+    "reasoning_effort": "high",
+    "disable_plugins": true,
+    "max_retries": 3,
+    "retry_backoff_base_seconds": 1.0,
+    "retry_backoff_max_seconds": 8.0,
+    "call_log_dir": "logs/codex_cli_calls",
+    "stages": ["recovery"]
+  }
+}

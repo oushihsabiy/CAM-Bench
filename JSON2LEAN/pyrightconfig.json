@@ -1,0 +1,7 @@
+{
+  "include": ["main.py", "src"],
+  "venvPath": ".",
+  "venv": ".venv3.11",
+  "extraPaths": ["src"],
+  "typeCheckingMode": "basic"
+}
