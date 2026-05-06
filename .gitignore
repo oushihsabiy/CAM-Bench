@@ -60,10 +60,6 @@ __pycache__/
 .idea/
 .vscode/
 
-# Embedded repositories that should not be committed from the outer repo
-/JSON2LEAN/
-/PdfToJson/
-
 # Logs and run traces
 *.log
 *.log.*
@@ -106,7 +102,11 @@ logs/
 **/revise-*/
 
 # Embedded evaluation repositories and generated Lean projects
-/evaluation/LeanBenchmark-Difficulty-Assessment*/
+/evaluation/LeanBenchmark-Difficulty-Assessments/
+/evaluation/LeanBenchmark-Difficulty-Assessments-2/
+/evaluation/LeanBenchmark-Difficulty-Assessments-ds-pfbody/
+/evaluation/LeanBenchmark-Difficulty-Assessments-gemini/
+/evaluation/LeanBenchmark-Difficulty-Assessments-gpt/
 /evaluation/lean/Leanproject/
 /evaluation/aristotle/result_extracted/
 /proofbench-evaluation-hard/proof-bench/
